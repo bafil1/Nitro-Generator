@@ -1,0 +1,98 @@
+```html
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Discord Nitro Code Generator</title>
+    <!-- Bootstrap CSS -->
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+</head>
+<body>
+    <div class="container mt-5">
+        <div class="row justify-content-center">
+            <div class="col-md-6">
+                <h2 class="text-center">Discord Nitro Code Generator</h2>
+                <div class="form-group">
+                    <label for="lengthOfCodes">Length of Codes:</label>
+                    <input type="number" class="form-control" id="lengthOfCodes" placeholder="Enter length of codes" required>
+                </div>
+                <div class="form-group">
+                    <label for="amountOfCodes">Amount of Codes:</label>
+                    <input type="number" class="form-control" id="amountOfCodes" placeholder="Enter amount of codes" required>
+                </div>
+                <button id="generateBtn" class="btn btn-danger w-100">GENERATE</button>
+                <ul id="validCodes" class="list-group mt-3"></ul>
+                <p id="noCodesValid" class="text-center mt-3" style="display: none;">No codes valid.</p>
+            </div>
+        </div>
+    </div>
+
+    <!-- Bootstrap & jQuery JS -->
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+    <script>
+        $(document).ready(function() {
+            $('#generateBtn').click(function() {
+                var lengthOfCodes = parseInt($('#lengthOfCodes').val());
+                var amountOfCodes = parseInt($('#amountOfCodes').val());
+                var validCodes = [];
+
+                for (var i = 0; i < amountOfCodes; i++) {
+                    var code = generateRandomCode(lengthOfCodes);
+                    if (isDiscordNitroCode(code)) {
+                        validCodes.push(code);
+                    }
+                }
+
+                if (validCodes.length > 0) {
+                    $('#validCodes').empty();
+                    validCodes.forEach(function(code) {
+                        $('#validCodes').append('<li class="list-group-item">' + code + '</li>');
+                    });
+                    $('#noCodesValid').hide();
+                } else {
+                    $('#validCodes').empty();
+                    $('#noCodesValid').show();
+                }
+            });
+
+            function generateRandomCode(length) {
+                var characters = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789';
+                var code = '';
+                for (var i = 0; i < length; i++) {
+                    code += characters.charAt(Math.floor(Math.random() * characters.length));
+                }
+                return code;
+            }
+
+            function isDiscordNitroCode(code) {
+                // Replace this with your own implementation to check if the code is a valid Discord Nitro code
+                // For demonstration purposes, we'll assume all codes starting with 'ABC' are valid
+                return code.startsWith('ABC');
+            }
+        });
+    </script>
+</body>
+</html>
+```
+
+```css
+body {
+    font-family: Arial, sans-serif;
+}
+
+.container {
+    max-width: 500px;
+}
+
+#validCodes {
+    max-height: 200px;
+    overflow-y: auto;
+}
+
+#noCodesValid {
+    color: red;
+    font-weight: bold;
+}
+```
